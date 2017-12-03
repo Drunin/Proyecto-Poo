@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class Estudiante extends Usuario  {
 
     int MateriasRegistradas = 0;
-    public Estudiante(String nombre, int edad, int MateriasRegistradas){
-        super.nombre=nombre;
-        super.edad=edad;
-        this.MateriasRegistradas=MateriasRegistradas;
-    }
+//    public Estudiante(String nombre, int edad, int MateriasRegistradas){
+//        super.nombre=nombre;
+//        super.edad=edad;
+//        this.MateriasRegistradas=MateriasRegistradas;
+//    }
     public Estudiante(String nombre, String apellido, int edad, String casa, String varita,
             String Tipo_de_mago) {
         super.nombre = nombre;
@@ -62,6 +62,21 @@ public String toString(){
                 }
             }
         }
+        
+    if(opc==1){
+        //Ver cursos planificados
+        
+        
+    }
+    if(opc==2){
+        
+    }
+    if(opc==3){
+        
+    }
+    /////////////////////////////////////////////////////Hacer un menu para salir
+    
+    menu_estudiante();
     }
 
 

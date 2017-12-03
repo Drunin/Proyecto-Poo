@@ -1,0 +1,1 @@
+nombres,apellidos,edad,varita,fechaIngreso,tipo,animal,hechizo,pocion,deporte

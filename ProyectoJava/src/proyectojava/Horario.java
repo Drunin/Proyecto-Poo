@@ -72,11 +72,33 @@ public class Horario {
 
             for (String fecha :horario_texto) {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+                temporal = fecha.split("-");
+                if (temporal[0] == diaB) {
+                    
+                    temporalhora1=convertirEntero(temporal[1]);
+                    temporalhora2=convertirEntero(temporal[2]);
+                    
+                   
+
+                    if (horaSalidaEntero[0] < temporalhora1[0] || ((horaSalidaEntero[0] == temporalhora1[0] && horaSalidaEntero[1] <= temporalhora1[1]))) {
+                        flag2 = true;
+                    } else {
+                        if (horaIngresoEntero[0] > temporalhora2[0] || (horaIngresoEntero[0] == temporalhora2[0] && horaIngresoEntero[1]>= temporalhora2[1])) {
+                            flag2 = true;
+                        } else {
+                            flag2 = false;
+                        }
+
+                    }
+
+                }
+
+            }       
+    return flag2;
+    }
+
+   
+    
     }
     
 

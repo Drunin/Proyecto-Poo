@@ -19,6 +19,7 @@ import java.util.Scanner;
 public class Planificador {
 
     static ArrayList A_profesores = new ArrayList();
+    static ArrayList A_estudiantes = new ArrayList();
 
     public static void menu_planificador() throws IOException {
         Scanner sc = new Scanner(System.in);
@@ -57,6 +58,9 @@ public class Planificador {
         }
         if (opc == 2) {
             CrearProfesor();
+        }
+        if (opc == 3) {
+            CrearEstudiante();
         }
 
     }
@@ -135,13 +139,13 @@ public class Planificador {
         System.out.print("Fecha de ingreso (dd/mm/aaaa): ");
         String fecha_ingreso = sc.nextLine();
         String tipomyb = tipo_mago();
-        if (tipomyb.equalsIgnoreCase("Animago")) {
+        if (tipomyb.equalsIgnoreCase("A")) {
             String anihechi = Animago();
             String[] Lanihechi = anihechi.split("-");
             animal = Lanihechi[0];
             hechizo = Lanihechi[1];
         } else {
-            if (tipomyb.equalsIgnoreCase("metamorfomago")) {
+            if (tipomyb.equalsIgnoreCase("M")) {
                 pocion = Metamorfomago();
             } else {
                 deporte = Estandar();
@@ -165,6 +169,65 @@ public class Planificador {
             } else {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
                 bw.write(nombre + "," + apellido + "," + edad + "," + varita + "," + fecha_ingreso + "," + tipomyb + "," + animal + "," + hechizo + "," + pocion + "," + deporte);
+                bw.close();
+                Planificador.menu_planificador();
+            }
+        } else {
+            Planificador.menu_planificador();
+        }
+
+    }
+
+    public static void CrearEstudiante() throws IOException {
+        System.out.println("");
+        boolean flag = false;
+        String casa = "";
+        int edad = 0;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("/** CREAR ESTUDIANTE **/");
+        System.out.print("Ingrese nombre: ");
+        String nombre = sc.nextLine();
+        System.out.print("Ingrese apellido: ");
+        String apellido = sc.nextLine();
+        while (flag == false) { //Inicio ingreso edad
+            System.out.print("Ingrese edad: ");
+            flag = true;
+            String cadena_edad = sc.nextLine();
+            try {
+                edad = Integer.parseInt(cadena_edad);
+            } catch (Exception e) {
+                System.out.println("");
+                System.out.println("Error de ingreso. Por favor intente nuevamente.");
+                flag = false;
+            }
+        } //Final ingreso edad 
+        System.out.print("Ingrese varita: ");
+        String varita = sc.nextLine();
+        flag = false;
+        while (flag == false) {
+            System.out.print("Ingrese casa: ");
+            casa = sc.nextLine();
+            flag = verificarCasa(casa);
+        }
+        String tipomyb = tipo_mago();
+        //Crear el estudiante con todos los datos almacenados
+        int g = guardardatos();
+        if (g == 1) {
+            //CReo el profesor
+            Estudiante e = new Estudiante(nombre, apellido, edad, casa, varita, tipomyb);
+            A_estudiantes.add(e);
+            System.out.println("Sus datos se han guardado correctamente");
+            String ruta = "estudiantes.txt";
+            File archivo = new File(ruta);
+            if (archivo.exists()) {
+                FileWriter bw = new FileWriter(archivo, true);
+                String x = System.getProperty("line.separator");
+                bw.write(x + "" + nombre + "," + apellido + "," + edad + "," + varita + "," + casa + "," + tipomyb);
+                bw.close();
+                Planificador.menu_planificador();
+            } else {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
+                bw.write(nombre + "," + apellido + "," + edad + "," + varita + "," + casa + "," + tipomyb);
                 bw.close();
                 Planificador.menu_planificador();
             }
@@ -262,21 +325,6 @@ public class Planificador {
         System.out.print("Ingrese su deporte favorito: ");
         String deporte = sc.nextLine();
         return deporte;
-    }
-
-    public static void CrearEstudiante() {
-        String animal = null;
-        String pocion = null;
-        String deporte = null;
-        boolean flag = false;
-        Scanner sc = new Scanner(System.in);
-
-        flag = false;
-        while (flag == false) {
-            System.out.print("Ingrese casa: ");
-            String casa = sc.nextLine();
-            flag = verificarCasa(casa);
-        }
     }
 
     public static boolean verificarCasa(String casa) {

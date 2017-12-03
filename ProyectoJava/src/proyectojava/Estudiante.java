@@ -5,28 +5,36 @@
  */
 package proyectojava;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
  *
  * @author IYAC
  */
-public class Estudiante extends Usuario {
+public class Estudiante extends Usuario  {
 
+    int MateriasRegistradas = 0;
+    public Estudiante(String nombre, int edad, int MateriasRegistradas){
+        super.nombre=nombre;
+        super.edad=edad;
+        this.MateriasRegistradas=MateriasRegistradas;
+    }
     public Estudiante(String nombre, String apellido, int edad, String casa, String varita,
-        String Tipo_de_mago, String animal, String pocion, String deporte) {
+            String Tipo_de_mago) {
         super.nombre = nombre;
         super.apellido = apellido;
         super.edad = edad;
         super.casa = casa;
         super.varita = varita;
         super.Tipo_de_mago = Tipo_de_mago;
-        super.animal = animal;
-        super.pocion = pocion;
-        super.deporte = deporte;
 
     }
-
+@Override
+public String toString(){
+    return ("El estudiante se llama "+nombre+" "+apellido+", edad "+edad+", tiene "+MateriasRegistradas+" Materias registradas vive en la casa "+casa+""
+            + ", su varita es de "+varita+ ",y es un mago o hechicera de tipo "+Tipo_de_mago);
+}
     public static void menu_estudiante() {
         Scanner sc = new Scanner(System.in);
         String opcion;
@@ -55,4 +63,10 @@ public class Estudiante extends Usuario {
             }
         }
     }
+
+
+    
+
+    
+   
 }

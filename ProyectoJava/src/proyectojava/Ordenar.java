@@ -16,10 +16,11 @@ public abstract class Ordenar implements Comparator {
     public static Comparator<Estudiante> EstudiantePorNombre = new Comparator<Estudiante>() {
 
         public int compare(Estudiante e1, Estudiante e2) {
-            if (e1.nombre.equalsIgnoreCase(e2.nombre)) {
+            if(e1.nombre.compareToIgnoreCase(e2.nombre) == 0) {            
                 return e1.nombre.compareTo(e2.nombre);
-            }  
-            return 5;
+            } else {
+                return e1.nombre.compareToIgnoreCase(e2.nombre);
+            }
         }};
     
 

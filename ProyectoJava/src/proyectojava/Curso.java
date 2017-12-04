@@ -43,17 +43,22 @@ public class Curso {
         
     }
     
-    public static String ObtenerCurso(String materia){
+    public static void ObtenerCurso(String materia){
         String ubicacion ="curso.txt";
         String cadena;
+        
         try {
             FileReader archivo = new FileReader(ubicacion);
             BufferedReader bf = new BufferedReader(archivo);
             
             while ((cadena = bf.readLine()) != null) {
                 String m = cadena.split(",")[0];
+                String []linea = cadena.split(",");
                 if(m.equalsIgnoreCase(materia) == true){
-                    return cadena;
+                    System.out.println("MATERIA: " + materia);
+                    System.out.println("PROFESOR: " + linea[1] );
+                    System.out.println("HORARIO: " + linea[2] + linea[3]);
+                    System.out.println("REGISTRADOS: " + linea[-1]);
                 }
             }
             System.out.println("No se encontro materia");
@@ -63,7 +68,7 @@ public class Curso {
             System.out.println("Error con el archivo");
             
         }
-        return null;
+        
         
     }
     

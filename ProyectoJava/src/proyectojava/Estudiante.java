@@ -5,6 +5,8 @@
  */
 package proyectojava;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -79,9 +81,33 @@ public String toString(){
     menu_estudiante();
     }
 
-
     
+
+    public static void AgregarEstudiante(String nombre,String apellido,String edad,String varita, 
+            String casa, String Tipo_de_mago){
+        String ubicacion ="profesor.txt";
+        try{
+        FileWriter archivo = new FileWriter(ubicacion,true);
+        
+//        for( int i = 0;i <ncurso.length();i++){
+//            escritura.write(ncurso.charAt(i));
+//            escritura.w
+//        }
+        PrintWriter linea = new PrintWriter(archivo,true);
+        linea.println(nombre + "," + apellido + "," +edad+ "," +varita+ "," + casa + "," +
+                Tipo_de_mago) ;
+        linea.close();
+        archivo.close();
+    }
+    
+    catch(Exception e){
+        System.out.println("Error con el archivo");
+        System.out.println(e);       
+        }
+    }
+        
+    }
 
     
    
-}
+

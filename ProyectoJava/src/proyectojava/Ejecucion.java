@@ -28,7 +28,7 @@ public class Ejecucion {
             System.out.println("2. Estudiante");
             opcion = sc.nextLine();
 
-            while ((opcion.equalsIgnoreCase("1") & opcion.equalsIgnoreCase("2")) == false) {
+            while ((opcion.equalsIgnoreCase("1") | opcion.equalsIgnoreCase("2")) == false) {
                 System.out.println("Opcion incorrecta, vuelva a elegir");
                 opcion = sc.nextLine();
             }

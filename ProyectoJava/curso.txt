@@ -1,1 +1,3 @@
 materia,profesor,dia,horaio,capacidad
+Pociones,dj,martes,12:30-14:30,34
+Adivinación,dj,martes,12:30,34

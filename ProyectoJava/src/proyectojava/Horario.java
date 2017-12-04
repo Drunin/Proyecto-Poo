@@ -6,99 +6,42 @@
 package proyectojava;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *
- * @author Mi compu
+ * @author IYAC
  */
-public class Horario {
-    ArrayList<String> horario_texto = new ArrayList<String>();
-    Scanner entrada= new Scanner(System.in);
-    
-    public int[] convertirEntero(String hora){
-        String horaString[] = new String[2];
-        int horaEntero [] = new int[2];
-        horaString = hora.split(":");
-        horaEntero[0] = Integer.parseInt(horaString[0]);
-        horaEntero[1] = Integer.parseInt(horaString[1]);
-        
-        return horaEntero;
-    }
+public abstract class Horario {
 
-    public void AgregarHorario(String dia, String horaIngreso, String horaSalida) {
-       
-      
-        int [] horaIngresoEntero = convertirEntero(horaIngreso);
-        int [] horaSalidaEntero = convertirEntero(horaSalida);
-        
-        
-        while ((horaIngresoEntero[0] < horaSalidaEntero[0] || horaIngresoEntero[0] == horaSalidaEntero[0] && horaIngresoEntero[1] < horaSalidaEntero[1])==false) {
-            System.out.println("Horas incorrectas,ingrese nuevamente");
-            System.out.print("Ingrese hora inicial");
-            horaIngreso=entrada.nextLine();
-            System.out.println("Ingrese hora salida");
-            horaSalida=entrada.nextLine();
-            horaIngresoEntero= convertirEntero(horaIngreso);
-            horaSalidaEntero= convertirEntero(horaSalida);
+    static int n = 0;
+    static String[] A_Horario = new String[n];
+//esta funcion permite comparar los horarios registrados con el solicitado y asi conocer si hay una igual para descartarlo
+    //Se hace uso de un array List
+    public static boolean Registrar_Horario(String Horario) {
+        //Hoario martes-12:00-15:00
+        for (int i = 0; i < A_Horario.length; i++) {
+            if (Horario.equalsIgnoreCase(A_Horario[i])) {
+                System.out.println("Este horario ya se encuentra registrado! ");
+                return false;
             }
-        horario_texto.add(dia+"-"+horaIngreso+"-"+horaSalida);
-    }
-            
+        }
+        n += 1;
+        String[] A1_Horario = new String[A_Horario.length];
+        for (int j = 0; j < A_Horario.length; j++) {
+            A1_Horario[j] = A_Horario[j];
+        }
+        A_Horario = new String[n];
+        for (int k = 0; k < A1_Horario.length; k++) {
+            A_Horario[k] = A1_Horario[k];
+        }
+        A_Horario[n - 1] = Horario;
+//        System.out.println("El horario se ha guardado con éxito!");
+//        System.out.println("Listado de horario: ");
+//        for(int i=0; i<A_Horario.length;i++){
+//            System.out.println(A_Horario[i]);
+//        }
+        return true;
 
-    public boolean HorarioDisponible(String diaB, String horaIngreso, String horaSalida) {
-        
-        boolean flag2 = false;
-        int [] horaIngresoEntero = convertirEntero(horaIngreso);
-        int [] horaSalidaEntero = convertirEntero(horaSalida);
-
-       
-        
-        while ((horaIngresoEntero[0] < horaSalidaEntero[0] || horaIngresoEntero[0] == horaSalidaEntero[0] && horaIngresoEntero[1] < horaSalidaEntero[1])==false) {
-            System.out.println("Horas incorrectas,ingrese nuevamente");
-            System.out.print("Ingrese hora inicial");
-            horaIngreso=entrada.nextLine();
-            System.out.println("Ingrese hora salida");
-            horaSalida=entrada.nextLine();
-            horaIngresoEntero= convertirEntero(horaIngreso);
-            horaSalidaEntero= convertirEntero(horaSalida);
-            }
-        
-        
-        
-            String temporal[] = new String[3];
-            int temporalhora1[] = new int  [2];
-            int temporalhora2[] = new int[2];
-
-            for (String fecha :horario_texto) {
-
-                temporal = fecha.split("-");
-                if (temporal[0] == diaB) {
-                    
-                    temporalhora1=convertirEntero(temporal[1]);
-                    temporalhora2=convertirEntero(temporal[2]);
-                    
-                   
-
-                    if (horaSalidaEntero[0] < temporalhora1[0] || ((horaSalidaEntero[0] == temporalhora1[0] && horaSalidaEntero[1] <= temporalhora1[1]))) {
-                        flag2 = true;
-                    } else {
-                        if (horaIngresoEntero[0] > temporalhora2[0] || (horaIngresoEntero[0] == temporalhora2[0] && horaIngresoEntero[1]>= temporalhora2[1])) {
-                            flag2 = true;
-                        } else {
-                            flag2 = false;
-                        }
-
-                    }
-
-                }
-
-            }       
-    return flag2;
     }
 
-   
-    
-    }
-    
-
+}

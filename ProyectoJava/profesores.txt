@@ -1,1 +1,2 @@
-nombres,apellidos,edad,varita,fechaIngreso,tipo,animal,hechizo,pocion,deporte
+severus,cactus,232,cobre,22/11/"2,A,perro,condo,null,null
+dj,dfshjfds,34,djs,sssss,A,perro,cobre,null,null

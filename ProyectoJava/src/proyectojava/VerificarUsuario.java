@@ -18,6 +18,8 @@ public class VerificarUsuario extends Usuario {
 
     static class Verificar_Usuario {
 
+        static String usuario;
+
         //En este metodo se cargan los datos del usuarios.txt 
         //y se crean las listas de estudiantes y planificador consu respectivo usuario
         public static boolean VerificarUsuario(String usuario, String contraseña) throws FileNotFoundException, IOException {
@@ -54,6 +56,7 @@ public class VerificarUsuario extends Usuario {
             }
             d.close();
             boolean flag = false;
+            Estudiante e = new Estudiante();
             //String usuario, String contraseña
             for (int i = 0; i < tamaño; i++) {
                 if (usuario.equalsIgnoreCase(Listadeestudiantes[i])) {
@@ -61,8 +64,8 @@ public class VerificarUsuario extends Usuario {
                         System.out.println("Ingreso exitoso");
                         //llamo al menu de estudiante
                         System.out.println("");
-                        System.out.println("MENÚ DE ESTUDIANTE");
-                        Estudiante.menu_estudiante();
+                        String nomape = Obtenernomape(usuario);
+                        e.menu_estudiante(nomape);
                         flag = true;
                         return true;
                     } else {
@@ -91,6 +94,46 @@ public class VerificarUsuario extends Usuario {
             }
             return flag;
         }
+    }
+//nos permite obtener el nombre y el apeliido del usuario que ingreso al sistema 
+    public static String Obtenernomape(String usuario) throws FileNotFoundException, IOException {
+        String archivo = "usuarios.txt";
+        String cadena;
+        int tamaño = 0;
+        FileReader f = new FileReader(archivo);
+        BufferedReader b = new BufferedReader(f);
+        while ((cadena = b.readLine()) != null) {
+            tamaño = tamaño + 1;
+        }
+        String[] Ln = new String[tamaño];
+        String[] La = new String[tamaño];
+        String[] Lu = new String[tamaño];
+        String[] LCadena;
+        b.close();
+        int a = 0;
+        FileReader file = new FileReader(archivo);
+        BufferedReader d = new BufferedReader(file);
+        while ((cadena = d.readLine()) != null) {
+            //Carga cadena 
+            LCadena = cadena.split(",");
+            if (LCadena[4].equalsIgnoreCase("estudiante")) {
+                Lu[a] = LCadena[0];
+                La[a] = LCadena[3];
+                Ln[a] = LCadena[2];
+                a++;
+            }
+        }
+        d.close();
+        boolean flag = false;
+        Estudiante e = new Estudiante();
+        //String usuario, String contraseña
+        for (int i = 0; i < tamaño; i++) {
+            if (usuario.equalsIgnoreCase(Lu[i])) {
+                return (Ln[i] + "-" + La[i]);
+            }
+        }
+        return "";
+
     }
 
 }

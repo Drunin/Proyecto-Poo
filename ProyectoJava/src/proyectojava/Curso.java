@@ -15,62 +15,76 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Curso {
-    String ubicacion ="curso.txt";    
-        
-        
-    
-    
-    public static void AgregarCruso(String ncurso){
-    String ubicacion ="curso.txt";
-        try{
-        FileWriter archivo = new FileWriter(ubicacion,true);
-        
+
+    String ubicacion = "curso.txt";
+//Agrega un curso al archivo curso 
+    public static void AgregarCurso(String ncurso) {
+        String ubicacion = "curso.txt";
+        try {
+            FileWriter archivo = new FileWriter(ubicacion, true);
+
 //        for( int i = 0;i <ncurso.length();i++){
 //            escritura.write(ncurso.charAt(i));
 //            escritura.w
 //        }
-        PrintWriter linea = new PrintWriter(archivo,true);
-        linea.println(ncurso);
-        linea.close();
-        archivo.close();
-    }
-    
-    catch(Exception e){
-        System.out.println("Error con el archivo");
-        System.out.println(e);       
-        }
-    
-        
-    }
-    
-    public static void ObtenerCurso(String materia){
-        String ubicacion ="curso.txt";
-        String cadena;
-        
-        try {
-            FileReader archivo = new FileReader(ubicacion);
-            BufferedReader bf = new BufferedReader(archivo);
-            
-            while ((cadena = bf.readLine()) != null) {
-                String m = cadena.split(",")[0];
-                String []linea = cadena.split(",");
-                if(m.equalsIgnoreCase(materia) == true){
-                    System.out.println("MATERIA: " + materia);
-                    System.out.println("PROFESOR: " + linea[1] );
-                    System.out.println("HORARIO: " + linea[2] + linea[3]);
-                    System.out.println("REGISTRADOS: " + linea[-1]);
-                }
-            }
-            System.out.println("No se encontro materia");
-            
-            
-        } catch (Exception ex) {
+            PrintWriter linea = new PrintWriter(archivo, true);
+            linea.println(ncurso);
+            linea.close();
+            archivo.close();
+            System.out.println("Su curso se ha agregado con exito!");
+        } catch (Exception e) {
             System.out.println("Error con el archivo");
-            
+            System.out.println(e);
         }
-        
-        
+
     }
-    
-    
+//Agrega un curso segun la materia y es uno especifico para planificador ya que se preseta la cantidad de estudiantes
+    public static void ObtenerCursoP(String materia) throws FileNotFoundException, IOException {
+        String ubicacion = "curso.txt";
+        String cadena;
+        int c = 0;
+//        try {
+        FileReader archivo = new FileReader(ubicacion);
+        BufferedReader bf = new BufferedReader(archivo);
+
+        while ((cadena = bf.readLine()) != null) {
+            String m = cadena.split(",")[0];
+            String[] linea = cadena.split(",");
+            if (m.equalsIgnoreCase(materia) == true) {
+                System.out.println("MATERIA: " + materia);
+                System.out.println("PROFESOR: " + linea[1]);
+                System.out.println("HORARIO: " + linea[2] + " " + linea[3]);
+                System.out.println("REGISTRADOS: " + linea[4]);
+                c += 1;
+            }
+        }
+        if (c == 0) {
+            System.out.println("No se encontro materia");
+        }
+
+    }
+//Agrega un curso segun la materia y es uno especifico para estudiante ya que se NO presenta la cantidad de estudiantes
+    public static void ObtenerCursoE(String materia) throws FileNotFoundException, IOException {
+        String ubicacion = "curso.txt";
+        String cadena;
+        int c = 0;
+//        try {
+        FileReader archivo = new FileReader(ubicacion);
+        BufferedReader bf = new BufferedReader(archivo);
+
+        while ((cadena = bf.readLine()) != null) {
+            String m = cadena.split(",")[0];
+            String[] linea = cadena.split(",");
+            if (m.equalsIgnoreCase(materia) == true) {
+                System.out.println("MATERIA: " + materia);
+                System.out.println("PROFESOR: " + linea[1]);
+                System.out.println("HORARIO: " + linea[2] + " " + linea[3]);
+                c += 1;
+            }
+        }
+        if (c == 0) {
+            System.out.println("No se encontro materia");
+        }
+
+    }
 }

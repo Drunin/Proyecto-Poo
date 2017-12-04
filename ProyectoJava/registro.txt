@@ -1,1 +1,2 @@
 fecha,nombre,apellidos,materia,tipo
+martes 12:30-14:30,Harry,Potter,Pociones,N

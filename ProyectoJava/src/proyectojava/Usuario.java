@@ -10,7 +10,7 @@ package proyectojava;
  * @author IYAC
  */
 public class Usuario {
-    
+//es la clase padre ya que de ella heredan profesors y estudiantes
     String nombre;
     String apellido;
     int edad;
@@ -18,15 +18,12 @@ public class Usuario {
     String varita;// (descripción de la varita)
     String Tipo_de_mago;
     String animal;
-    String pocion; 
+    String pocion;
     String deporte;
     String hechizo;
 
-
     public Usuario() {
-        System.out.println("Instanciousuairo  vacio");
+
     }
 
 }
-
-

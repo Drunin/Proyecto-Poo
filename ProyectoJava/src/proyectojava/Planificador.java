@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -18,9 +19,13 @@ import java.util.Scanner;
  */
 public class Planificador {
 
+    static String opcion;
+    static String opcionP;
+    static String[] MateriasGenerales = {"Pociones", "Defensa contra las artes oscuras", "Adivinación", "Astronomía",
+        "Historia de la Magia", "Herbología", "Encantamiento", "Vuelo"};
     static ArrayList A_profesores = new ArrayList();
     static ArrayList A_estudiantes = new ArrayList();
-
+//Se presenta el menu del planificador
     public static void menu_planificador() throws IOException {
         Scanner sc = new Scanner(System.in);
         String opcion;
@@ -34,6 +39,7 @@ public class Planificador {
             System.out.println("3. Crear Estudiante");
             System.out.println("4. Ver Horarios Planificados");
             System.out.println("5. Listado de estudiantes");
+            System.out.println("6. Salir");
             System.out.println("**************************************************");
             System.out.print("Ingrese la opción que desee: ");
 
@@ -47,59 +53,158 @@ public class Planificador {
                 flag = false;
             }
             if (flag == true) {
-                if (opc < 0 || opc > 5) {
+                if (opc < 0 || opc > 6) {
                     System.out.println("Su ingreso está fuera del rango de opciones. Por favor intente nuevamente");
                     flag = false;
                 }
             }
         }//fin de la validación de ingreso 
-        if (opc == 1) {
-            CrearCurso();
-        }
-        if (opc == 2) {
-            CrearProfesor();
-        }
-        if (opc == 3) {
-            CrearEstudiante();
-        }
+        while (opc != 6) {
+            if (opc == 1) {
+                opc = 6;
+                Opcion1Curso();
 
+            }
+            if (opc == 2) {
+                opc = 6;
+                CrearProfesor();
+            }
+            if (opc == 3) {
+                opc = 6;
+                CrearEstudiante();
+            }
+            if (opc == 4)//ver horarios planificado
+            {
+                opc = 6;
+                System.out.println("MATERIAS");
+                for (int i = 0; i < 8; i++) {
+                    System.out.println(i + 1 + ". " + MateriasGenerales[i]);
+                }
+                System.out.println("Eliga una materia del listado: ");
+                int num = sc.nextInt();
+                String materia = MateriasGenerales[num - 1];
+                Curso.ObtenerCursoP(materia);
+                menu_planificador();
+
+            }
+            if (opc == 5) { //Listado de estudiantes
+                opc = 6;
+                flag = false;
+                while (flag == false) {
+                    System.out.println("Escoja el tipo de ordenamiento ");
+                    System.out.println("1. Por nombre ");
+                    System.out.println("2. Por edad ");
+                    System.out.println("3. Por Materias Registradas ");
+                    System.out.print("Ingrese la opción que desee: ");
+
+                    flag = true;
+                    opcion = sc.nextLine();
+                    try {
+                        opc = Integer.parseInt(opcion);
+                    } catch (Exception e) {
+                        System.out.println("");
+                        System.out.println("Error de ingreso. Por favor intente nuevamente.");
+                        flag = false;
+                    }
+                    if (flag == true) {
+                        if (opc < 0 || opc > 3) {
+                            System.out.println("Su ingreso está fuera del rango de opciones. Por favor intente nuevamente");
+                            flag = false;
+                        }
+                    }
+                }
+                if (A_estudiantes.size() == 0) {
+                    System.out.println("No se han creado estudiantes todavia!");
+                } else {
+                    if (opc == 1) { //por nombre
+                        Collections.sort(A_estudiantes, Ordenar.EstudiantePorNombre);
+                        System.out.println("Por nombre");
+                        for (int i = 0; i < A_estudiantes.size(); i++) {
+                            System.out.println(A_estudiantes.get(i));
+                        }
+                    }
+                    if (opc == 2) { //por edad
+
+                        Collections.sort(A_estudiantes, Ordenar.EstudiantePorEdad);
+                        System.out.println("Por edad");
+                        for (int i = 0; i < A_estudiantes.size(); i++) {
+                            System.out.println(A_estudiantes.get(i));
+                        }
+
+                    }
+                    if (opc == 3) { //por mr
+                        Collections.sort(A_estudiantes, Ordenar.EstudiantePorMR);
+                        System.out.println("Por Materias Registradas");
+                        for (int i = 0; i < A_estudiantes.size(); i++) {
+                            System.out.println(A_estudiantes.get(i));
+                        }
+                    }
+                    menu_planificador();
+                }
+                menu_planificador();
+
+            }
+        }
     }
-
-    public static void CrearCurso() {
-        boolean flag = false;
-        String opcion;
-        int opc = 0;
-        String[] MateriasGenerales = {"Pociones", "Defensa contra las artes oscuras", "Adivinación", "Astronomía",
-            "Historia de la Magia", "Herbología", "Encantamiento", "Vuelo"};
+//muestra las materias disponibles para la creacion de un curso
+    public static void Opcion1Curso() throws IOException {
+        String op;
         Scanner sc = new Scanner(System.in);
-        System.out.println("");
-        System.out.println("******* CREAR CURSO *******");
-        while (flag == false) {
-            System.out.println("         MATERIAS");
-            for (int i = 0; i < MateriasGenerales.length; i++) {
+        if (Profesor.LineasArchivo() <= 1) {
+            System.out.println("No hay profesores registrados, registre uno antes de "
+                    + "crear un curso");
+            menu_planificador();
+        } else {
+            System.out.println("MATERIAS");
+            for (int i = 0; i < 8; i++) {
                 System.out.println(i + 1 + ". " + MateriasGenerales[i]);
             }
-            System.out.print("Elija una materia del listado de materias: ");
-            flag = true;
-            opcion = sc.nextLine();
-            try {
-                opc = Integer.parseInt(opcion);
-            } catch (Exception e) {
-                System.out.println("");
-                System.out.println("Error de ingreso. Por favor intente nuevamente.");
-                flag = false;
-            }
-            if (flag == true) {
-                if (opc < 0 || opc > MateriasGenerales.length) {
-                    System.out.println("Su ingreso está fuera del rango de opciones. Por favor intente nuevamente");
-                    flag = false;
-                }
-            }
-        }//find el while
+            System.out.println("Eliga una materia del listado: ");
+            int num = sc.nextInt();
+            String materia = MateriasGenerales[num - 1];
+            System.out.println("");
+            System.out.println("");
+            System.out.println("PROFESORES");
+            String[] Aprofesores = Profesor.ListaProfesores();
+            for (int x = 0; x < Aprofesores.length; x++) {
+                System.out.println(x + 1 + ". " + Aprofesores[x]);
 
-        //Falta el profesor
+            }
+
+            System.out.print("Eliga un profesor del listado de materias: ");
+            int numProfesor = sc.nextInt();
+            String profesor = Aprofesores[numProfesor - 1];
+            System.out.print("");
+            String saltoDeLinea = sc.nextLine();
+            System.out.print("Ingrese capacidad del curso:");
+            String capacidad = sc.nextLine();
+            System.out.print("");
+            System.out.print("Ingrese el dia:");
+            String dia = sc.nextLine();
+
+            System.out.print("Ingrese el horario del curso (hh:mm-hh:mm):  ");
+            String horario = sc.nextLine();
+            String fecha = dia + "-" + horario;
+            boolean flag = Horario.Registrar_Horario(fecha);
+            while (flag == false) {
+                System.out.print("Ingrese el dia:");
+                dia = sc.nextLine();
+                System.out.print("Ingrese el horario del curso (hh:mm-hh:mm):  ");
+                horario = sc.nextLine();
+                fecha = dia + "-" + horario;
+                flag = Horario.Registrar_Horario(fecha);
+            }
+            CrearCurso(materia, profesor, dia, horario, capacidad);
+            menu_planificador();
+        }
     }
-
+//Permite crear una objeto curso y lo registrar en el curso.txt
+    static public void CrearCurso(String materia, String profesor, String dia, String horario, String capacidad) {
+        String datoscurso = materia + "," + profesor + "," + dia + "," + horario + "," + capacidad;
+        String fecha = dia + "-" + horario;
+        Curso.AgregarCurso(datoscurso);
+    }
+//crea un objeto profesor y llama al metodo registrarprofesor
     public static void CrearProfesor() throws IOException {
         String animal = null;
         String pocion = null;
@@ -173,11 +278,12 @@ public class Planificador {
                 Planificador.menu_planificador();
             }
         } else {
+
             Planificador.menu_planificador();
         }
 
     }
-
+//crea un estudiante y lo agrega a estudiantes.txt con todos los datos necesarios
     public static void CrearEstudiante() throws IOException {
         System.out.println("");
         boolean flag = false;
@@ -236,7 +342,8 @@ public class Planificador {
         }
 
     }
-
+//metodos utilizados por la clase estudiante dependiendo del tipo de mago o hechicero y algunas verificaciones
+    //para validar que no se estan ingresando datos erroneos
     public static int guardardatos() {
         boolean flag = false;
         Scanner sc = new Scanner(System.in);

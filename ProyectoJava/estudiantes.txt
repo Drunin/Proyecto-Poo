@@ -1,1 +1,2 @@
-nombre,apellido,edad,varita,casa,tipo
+isabel,atiencia,43,cobre,griffindor,M
+Harry,Potter,19,madera,griffindor,E

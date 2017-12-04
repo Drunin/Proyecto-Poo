@@ -43,8 +43,8 @@ public  class Registro {
     
     
     public static void AgregarRegistro(String fecha, String nombre, String apellido,
-            String materia){
-        int edad = 0;
+            String materia, int edad){
+        
         String tipo;
         String ubicacion ="registro.txt";
         if((materia.equalsIgnoreCase("Pociones") | materia.equalsIgnoreCase("Defensa contra las artes oscuras")
